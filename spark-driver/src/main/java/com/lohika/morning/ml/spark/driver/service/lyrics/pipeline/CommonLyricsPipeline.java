@@ -105,7 +105,12 @@ public abstract class CommonLyricsPipeline implements LyricsPipeline {
         );
 
         rawTrainingSet.select("lyrics").show(20, false);
-
+        rawTrainingSet.select("id").show(20, false);
+        rawTrainingSet.select("artist_name").show(20, false);
+        rawTrainingSet.select("track_name").show(20, false);
+        rawTrainingSet.select("release_date").show(20, false);
+        rawTrainingSet.select("genre").show(20, false);
+        rawTrainingSet.select("label").show(20, false);
 
         return rawTrainingSet;
     }
