@@ -97,9 +97,9 @@ public abstract class CommonLyricsPipeline implements LyricsPipeline {
         rawTrainingSet = rawTrainingSet.withColumn(
             LABEL.getName(),
                 when(col("genre").equalTo("pop"), Genre.POP.getValue())
-                .when(col("genre").equalTo("countru"), Genre.COUNTRY.getValue())
+                .when(col("genre").equalTo("country"), Genre.COUNTRY.getValue())
                 .when(col("genre").equalTo("blues"), Genre.BLUES.getValue())
-                .when(col("genre").equalTo("rcok"), Genre.ROCK.getValue())
+                .when(col("genre").equalTo("rock"), Genre.ROCK.getValue())
                 .when(col("genre").equalTo("jazz"), Genre.JAZZ.getValue())
                 .when(col("genre").equalTo("reggae"), Genre.REGGAE.getValue())
                 .when(col("genre").equalTo("hip hop"), Genre.HIP_HOP.getValue())
