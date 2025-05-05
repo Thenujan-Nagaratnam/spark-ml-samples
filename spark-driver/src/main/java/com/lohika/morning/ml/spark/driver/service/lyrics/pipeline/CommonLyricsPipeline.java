@@ -96,23 +96,17 @@ public abstract class CommonLyricsPipeline implements LyricsPipeline {
 
         rawTrainingSet = rawTrainingSet.withColumn(
             LABEL.getName(),
-                when(col("genre").equalTo("POP"), Genre.POP.getValue())
-                .when(col("genre").equalTo("COUNTRY"), Genre.COUNTRY.getValue())
-                .when(col("genre").equalTo("BLUES"), Genre.BLUES.getValue())
-                .when(col("genre").equalTo("ROCK"), Genre.ROCK.getValue())
-                .when(col("genre").equalTo("JAZZ"), Genre.JAZZ.getValue())
-                .when(col("genre").equalTo("REGGAE"), Genre.REGGAE.getValue())
-                .when(col("genre").equalTo("HIP_HOP"), Genre.HIP_HOP.getValue())
-                .when(col("genre").equalTo("HYPERPOP"), Genre.HYPERPOP.getValue())
+                when(col("genre").equalTo("pop"), Genre.POP.getValue())
+                .when(col("genre").equalTo("countru"), Genre.COUNTRY.getValue())
+                .when(col("genre").equalTo("blues"), Genre.BLUES.getValue())
+                .when(col("genre").equalTo("rcok"), Genre.ROCK.getValue())
+                .when(col("genre").equalTo("jazz"), Genre.JAZZ.getValue())
+                .when(col("genre").equalTo("reggae"), Genre.REGGAE.getValue())
+                .when(col("genre").equalTo("hip hop"), Genre.HIP_HOP.getValue())
+                .when(col("genre").equalTo("hyperpop"), Genre.HYPERPOP.getValue())
             .otherwise(Genre.UNKNOWN.getValue())
         );
 
-        rawTrainingSet.select("lyrics").show(20, false);
-        rawTrainingSet.select("id").show(20, false);
-        rawTrainingSet.select("artist_name").show(20, false);
-        rawTrainingSet.select("track_name").show(20, false);
-        rawTrainingSet.select("release_date").show(20, false);
-        rawTrainingSet.select("genre").show(20, false);
         rawTrainingSet.select("label").show(20, false);
 
         return rawTrainingSet;
