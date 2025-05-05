@@ -60,7 +60,17 @@ public abstract class CommonLyricsPipeline implements LyricsPipeline {
             System.out.println("Probability: " + probability);
             System.out.println("------------------------------------------------\n");
 
-            return new GenrePrediction(getGenre(prediction).getName(), probability.apply(0), probability.apply(1));
+            return new GenrePrediction(
+                getGenre(prediction).getName(),
+                probability.apply(0),
+                probability.apply(1),
+                probability.apply(2),
+                probability.apply(3),
+                probability.apply(4),
+                probability.apply(5),
+                probability.apply(6),
+                probability.apply(7)
+            );
         }
 
         System.out.println("------------------------------------------------\n");
