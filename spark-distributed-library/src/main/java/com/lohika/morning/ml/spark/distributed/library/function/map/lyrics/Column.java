@@ -18,6 +18,8 @@ public enum Column {
 
     LABEL("label", DataTypes.DoubleType),
 
+    GENRE("genre", DataTypes.DoubleType),
+
     FILTERED_WORD("filteredWord", DataTypes.StringType),
 
     FILTERED_WORDS("filteredWords", DataTypes.createArrayType(DataTypes.StringType)),
