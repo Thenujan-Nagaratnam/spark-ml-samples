@@ -88,7 +88,7 @@ public abstract class CommonLyricsPipeline implements LyricsPipeline {
                 .schema(getTrainingSetSchema())
                 .csv(lyricsTrainingSetDirectoryPath + "/Merged_dataset.csv");
 
-        rawTrainingSet = rawTrainingSet.withColumn("id", monotonically_increasing_id());
+        rawTrainingSet = rawTrainingSet.withColumn("id", monotonically_increasing_id().cast("string"));
 
             
         rawTrainingSet.count();
@@ -106,8 +106,6 @@ public abstract class CommonLyricsPipeline implements LyricsPipeline {
                 .when(col("genre").equalTo("hyperpop"), Genre.HYPERPOP.getValue())
             .otherwise(Genre.UNKNOWN.getValue())
         );
-
-        rawTrainingSet.select("label").show(20, false);
 
         return rawTrainingSet;
     }
