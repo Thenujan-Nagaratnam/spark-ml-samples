@@ -92,6 +92,7 @@ public abstract class CommonLyricsPipeline implements LyricsPipeline {
 
     private StructType getTrainingSetSchema() {
         return new StructType(new StructField[] {
+                new StructField("id", DataTypes.StringType, true, Metadata.empty()),
                 new StructField("artist_name", DataTypes.StringType, true, Metadata.empty()),
                 new StructField("track_name", DataTypes.StringType, true, Metadata.empty()),
                 new StructField("release_date", DataTypes.StringType, true, Metadata.empty()),
