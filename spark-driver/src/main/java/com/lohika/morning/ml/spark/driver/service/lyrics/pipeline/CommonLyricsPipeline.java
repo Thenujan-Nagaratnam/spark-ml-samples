@@ -64,35 +64,58 @@ public abstract class CommonLyricsPipeline implements LyricsPipeline {
     }
 
     Dataset<Row> readLyrics() {
-        Dataset input = readLyricsForGenre(lyricsTrainingSetDirectoryPath, Genre.METAL)
-                                                .union(readLyricsForGenre(lyricsTrainingSetDirectoryPath, Genre.POP));
-        // Reduce the input amount of partition minimal amount (spark.default.parallelism OR 2, whatever is less)
-        input = input.coalesce(sparkSession.sparkContext().defaultMinPartitions()).cache();
-        // Force caching.
-        input.count();
+        Dataset<Row> rawTrainingSet = sparkSession
+                .read()
+                .option("header", "true")
+                .schema(getTrainingSetSchema())
+                .csv(lyricsTrainingSetDirectoryPath + "/Merged_dataset.csv");
 
-        return input;
+        rawTrainingSet.count();
+        rawTrainingSet.cache();
+
+        return rawTrainingSet;
     }
 
-    private Dataset<Row> readLyricsForGenre(String inputDirectory, Genre genre) {
-        Dataset<Row> lyrics = readLyrics(inputDirectory, genre.name().toLowerCase() + "/*");
-        Dataset<Row> labeledLyrics = lyrics.withColumn(LABEL.getName(), functions.lit(genre.getValue()));
-
-        System.out.println(genre.name() + " music sentences = " + lyrics.count());
-
-        return labeledLyrics;
+    private StructType getTrainingSetSchema() {
+        return new StructType(new StructField[] {
+                new StructField("artist_name", DataTypes.StringType, true, Metadata.empty()),
+                new StructField("track_name", DataTypes.StringType, true, Metadata.empty()),
+                new StructField("release_date", DataTypes.StringType, true, Metadata.empty()),
+                new StructField("genre", DataTypes.StringType, true, Metadata.empty()),
+                new StructField("lyrics", DataTypes.StringType, true, Metadata.empty())
+        });
     }
 
-    private Dataset<Row> readLyrics(String inputDirectory, String path) {
-        Dataset<String> rawLyrics = sparkSession.read().textFile(Paths.get(inputDirectory).resolve(path).toString());
-        rawLyrics = rawLyrics.filter(rawLyrics.col(VALUE.getName()).notEqual(""));
-        rawLyrics = rawLyrics.filter(rawLyrics.col(VALUE.getName()).contains(" "));
+    // Dataset<Row> readLyrics() {
+    //     Dataset input = readLyricsForGenre(lyricsTrainingSetDirectoryPath, Genre.METAL)
+    //                                             .union(readLyricsForGenre(lyricsTrainingSetDirectoryPath, Genre.POP));
+    //     // Reduce the input amount of partition minimal amount (spark.default.parallelism OR 2, whatever is less)
+    //     input = input.coalesce(sparkSession.sparkContext().defaultMinPartitions()).cache();
+    //     // Force caching.
+    //     input.count();
 
-        // Add source filename column as a unique id.
-        Dataset<Row> lyrics = rawLyrics.withColumn(ID.getName(), functions.input_file_name());
+    //     return input;
+    // }
 
-        return lyrics;
-    }
+    // private Dataset<Row> readLyricsForGenre(String inputDirectory, Genre genre) {
+    //     Dataset<Row> lyrics = readLyrics(inputDirectory, genre.name().toLowerCase() + "/*");
+    //     Dataset<Row> labeledLyrics = lyrics.withColumn(LABEL.getName(), functions.lit(genre.getValue()));
+
+    //     System.out.println(genre.name() + " music sentences = " + lyrics.count());
+
+    //     return labeledLyrics;
+    // }
+
+    // private Dataset<Row> readLyrics(String inputDirectory, String path) {
+    //     Dataset<String> rawLyrics = sparkSession.read().textFile(Paths.get(inputDirectory).resolve(path).toString());
+    //     rawLyrics = rawLyrics.filter(rawLyrics.col(VALUE.getName()).notEqual(""));
+    //     rawLyrics = rawLyrics.filter(rawLyrics.col(VALUE.getName()).contains(" "));
+
+    //     // Add source filename column as a unique id.
+    //     Dataset<Row> lyrics = rawLyrics.withColumn(ID.getName(), functions.input_file_name());
+
+    //     return lyrics;
+    // }
 
     private Genre getGenre(Double value) {
         for (Genre genre: Genre.values()){
