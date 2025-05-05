@@ -87,6 +87,19 @@ public abstract class CommonLyricsPipeline implements LyricsPipeline {
         rawTrainingSet.count();
         rawTrainingSet.cache();
 
+        rawTrainingSet = rawTrainingSet = rawTrainingSet.withColumn(
+            LABEL.getName(),
+                when(col("genre").equalTo("POP"), Genre.POP.getValue())
+                .when(col("genre").equalTo("COUNTRY"), Genre.COUNTRY.getValue())
+                .when(col("genre").equalTo("BLUES"), Genre.BLUES.getValue())
+                .when(col("genre").equalTo("ROCK"), Genre.ROCK.getValue())
+                .when(col("genre").equalTo("JAZZ"), Genre.JAZZ.getValue())
+                .when(col("genre").equalTo("REGGAE"), Genre.REGGAE.getValue())
+                .when(col("genre").equalTo("HIP_HOP"), Genre.HIP_HOP.getValue())
+                .when(col("genre").equalTo("HYPERPOP"), Genre.HYPERPOP.getValue())
+            .otherwise(Genre.UNKNOWN.getValue())
+        );
+
         return rawTrainingSet;
     }
 
