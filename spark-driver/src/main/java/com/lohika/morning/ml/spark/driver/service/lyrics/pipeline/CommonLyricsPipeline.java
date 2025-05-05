@@ -21,7 +21,7 @@ import org.apache.spark.sql.types.StructType;
 import static org.apache.spark.sql.functions.col;
 import static org.apache.spark.sql.functions.when;
 import static org.apache.spark.sql.functions.lit;
-
+import static org.apache.spark.sql.functions.monotonically_increasing_id;
 
 public abstract class CommonLyricsPipeline implements LyricsPipeline {
 
@@ -88,6 +88,9 @@ public abstract class CommonLyricsPipeline implements LyricsPipeline {
                 .schema(getTrainingSetSchema())
                 .csv(lyricsTrainingSetDirectoryPath + "/Merged_dataset.csv");
 
+        rawTrainingSet = rawTrainingSet.withColumn("id", monotonically_increasing_id());
+
+            
         rawTrainingSet.count();
         rawTrainingSet.cache();
 
@@ -117,7 +120,6 @@ public abstract class CommonLyricsPipeline implements LyricsPipeline {
 
     private StructType getTrainingSetSchema() {
         return new StructType(new StructField[] {
-                new StructField("id", DataTypes.StringType, true, Metadata.empty()),
                 new StructField("artist_name", DataTypes.StringType, true, Metadata.empty()),
                 new StructField("track_name", DataTypes.StringType, true, Metadata.empty()),
                 new StructField("release_date", DataTypes.StringType, true, Metadata.empty()),
