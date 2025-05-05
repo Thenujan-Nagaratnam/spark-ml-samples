@@ -14,6 +14,10 @@ import org.apache.spark.ml.tuning.CrossValidatorModel;
 import org.apache.spark.sql.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.apache.spark.sql.types.DataTypes;
+import org.apache.spark.sql.types.Metadata;
+import org.apache.spark.sql.types.StructField;
+import org.apache.spark.sql.types.StructType;
 
 public abstract class CommonLyricsPipeline implements LyricsPipeline {
 
