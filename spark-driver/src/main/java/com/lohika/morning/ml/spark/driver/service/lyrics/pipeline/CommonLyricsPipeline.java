@@ -91,7 +91,7 @@ public abstract class CommonLyricsPipeline implements LyricsPipeline {
         rawTrainingSet.count();
         rawTrainingSet.cache();
 
-        rawTrainingSet = rawTrainingSet = rawTrainingSet.withColumn(
+        rawTrainingSet = rawTrainingSet.withColumn(
             LABEL.getName(),
                 when(col("genre").equalTo("POP"), Genre.POP.getValue())
                 .when(col("genre").equalTo("COUNTRY"), Genre.COUNTRY.getValue())
@@ -103,6 +103,9 @@ public abstract class CommonLyricsPipeline implements LyricsPipeline {
                 .when(col("genre").equalTo("HYPERPOP"), Genre.HYPERPOP.getValue())
             .otherwise(Genre.UNKNOWN.getValue())
         );
+
+        rawTrainingSet.select("lyrics").show(20, false);
+
 
         return rawTrainingSet;
     }
