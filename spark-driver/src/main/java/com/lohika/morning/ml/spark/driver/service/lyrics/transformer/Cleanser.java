@@ -30,7 +30,7 @@ public class Cleanser extends Transformer implements MLWritable {
         sentences = sentences.withColumn(Column.CLEAN.getName(), regexp_replace(trim(column(Column.VALUE.getName())), "[^\\w\\s]", ""));
         sentences = sentences.drop(Column.VALUE.getName());
 
-        sentences = sentences.withColumn(Column.GENRE.getName(), Column.LABEL.getName());
+        sentences = sentences.withColumn(Column.LABEL.getName(), Column.GENRE.getName());
 
         // Remove double spaces.
         return sentences.withColumn(Column.CLEAN.getName(), regexp_replace(column(Column.CLEAN.getName()), "\\s{2,}", " "));
