@@ -1,6 +1,8 @@
 package com.lohika.morning.ml.spark.driver.service.lyrics.pipeline;
 
 import static com.lohika.morning.ml.spark.distributed.library.function.map.lyrics.Column.*;
+
+import com.lohika.morning.ml.spark.distributed.library.function.map.lyrics.Column;
 import com.lohika.morning.ml.spark.driver.service.MLService;
 import com.lohika.morning.ml.spark.driver.service.lyrics.Genre;
 import com.lohika.morning.ml.spark.driver.service.lyrics.GenrePrediction;
@@ -44,6 +46,7 @@ public abstract class CommonLyricsPipeline implements LyricsPipeline {
            Encoders.STRING());
 
         Dataset<Row> unknownLyricsDataset = lyricsDataset
+                .withColumnRenamed("value", VALUE.getName())
                 .withColumn(LABEL.getName(), functions.lit(Genre.UNKNOWN.getValue()))
                 .withColumn(ID.getName(), functions.lit("unknown.txt"));
 
