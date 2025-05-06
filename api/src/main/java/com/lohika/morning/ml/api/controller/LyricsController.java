@@ -20,12 +20,7 @@ public class LyricsController {
 
     @Autowired
     private LyricsService lyricsService;
-
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public String getLyricsPage() {
-        return "index";
-    }
-
+    
     @RequestMapping(value = "/train", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> trainLyricsModel() {
         Map<String, Object> trainStatistics = lyricsService.classifyLyrics();
