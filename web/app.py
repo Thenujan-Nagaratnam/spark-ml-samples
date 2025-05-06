@@ -7,7 +7,7 @@ import logging
 app = Flask(__name__)
 PREDICT_URL = 'http://172.18.113.33:9090/lyrics/predict'
 TRAIN_URL = 'http://172.18.113.33:9090/lyrics/train'
-MODEL_DIR_PATH = os.path.abspath("model/")
+MODEL_DIR_PATH = "../model"
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
