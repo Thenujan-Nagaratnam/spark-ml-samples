@@ -7,7 +7,7 @@ import logging
 app = Flask(__name__)
 PREDICT_URL = 'http://172.18.113.33:9090/lyrics/predict'
 TRAIN_URL = 'http://172.18.113.33:9090/lyrics/train'
-MODEL_DIR_PATH = os.path.abspath("spark-ml-samples/model")
+MODEL_DIR_PATH = os.path.abspath("model/")
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -55,16 +55,16 @@ def train():
     return True
 
 
-def load_model():
-    if not (
-        os.path.exists(MODEL_DIR_PATH)
-        and os.path.isdir(MODEL_DIR_PATH)
-        and len(os.listdir(MODEL_DIR_PATH)) > 0
-    ):
-        requests.get(TRAIN_URL)
-        return False
-    else:
-        return True
+# def load_model():
+#     if not (
+#         os.path.exists(MODEL_DIR_PATH)
+#         and os.path.isdir(MODEL_DIR_PATH)
+#         and len(os.listdir(MODEL_DIR_PATH)) > 0
+#     ):
+#         requests.get(TRAIN_URL)
+#         return False
+#     else:
+#         return True
 
 
 # @app.route("/predict", methods=["POST"])
@@ -93,21 +93,16 @@ def load_model():
 
 
 if __name__ == "__main__":
-    # Load model on startup
-    loaded = load_model()
-    if loaded:
-        # Create templates directory if it doesn't exist
-        os.makedirs("templates", exist_ok=True)
 
-        # Copy index.html to templates directory for Flask to find it
-        if not os.path.exists("templates/index.html"):
-            with open("index.html", "r") as f_src:
-                with open("templates/index.html", "w") as f_dst:
-                    f_dst.write(f_src.read())
+    # Create templates directory if it doesn't exist
+    os.makedirs("templates", exist_ok=True)
 
-        webbrowser.open("http://0.0.0.0:5000/")
-        # Run the Flask app
-        app.run(debug=True, host="0.0.0.0", port=5000)
+    # Copy index.html to templates directory for Flask to find it
+    if not os.path.exists("templates/index.html"):
+        with open("index.html", "r") as f_src:
+            with open("templates/index.html", "w") as f_dst:
+                f_dst.write(f_src.read())
 
-    else:
-        logger.error("Failed to load model. Exiting...")
+    webbrowser.open("http://0.0.0.0:5000/")
+    # Run the Flask app
+    app.run(debug=True, host="0.0.0.0", port=5000)

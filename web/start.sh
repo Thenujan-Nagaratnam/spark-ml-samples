@@ -11,7 +11,7 @@ python3 -m venv venv
 pip install --upgrade pip
 
 # Install dependencies
-pip install flask
+pip install flask requests
 
 # Run the application
-python3 app.py
+python3 web/app.py
