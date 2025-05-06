@@ -32,4 +32,16 @@ public class LyricsController {
         return new ResponseEntity<>(genrePrediction, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "text/html")
+    public ResponseEntity<String> getLyrics() {
+        try {
+            String htmlContent = new String(
+                Files.readAllBytes(Paths.get("src/main/resources/static/index.html"))
+            );
+            return new ResponseEntity<>(htmlContent, HttpStatus.OK);
+        } catch (IOException e) {
+            return new ResponseEntity<>("Error loading the page", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
