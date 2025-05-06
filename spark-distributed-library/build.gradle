@@ -36,9 +36,9 @@ dependencies {
     compile("ch.qos.logback:logback-classic:$logbackVersion")
     compile("com.github.master:spark-stemming_2.10:0.2.1")
 
-    // Spring Boot dependencies for web server and Thymeleaf
-    implementation("org.springframework.boot:spring-boot-starter-web:3.2.5")
-    implementation("org.springframework.boot:spring-boot-starter-thymeleaf:3.2.5")
+       // Spring Boot dependencies for web server and Thymeleaf
+    compile("org.springframework.boot:spring-boot-starter-web:3.2.5")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf:3.2.5")
 }
 
 configurations {
