@@ -1,12 +1,8 @@
 @echo off
+echo Starting Lyrics Classification System...
 
-:: Start backend
-call gradlew clean build shadowJar -x test
-start java -jar api\build\libs\api-1.0-SNAPSHOT.jar --spring.config.location=file:/home/thenu/spark-ml-sample/application.properties
+start cmd /c "cd /d %~dp0 && ./gradlew clean build shadowJar -x test && java -jar api/build/libs/api-1.0-SNAPSHOT.jar --spring.config.location=file:%~dp0application.properties"
 
-:: Wait for backend to start
 timeout /t 10
-
-:: Start web server
-cd frontend
-start http://localhost:9090/index.html
+start http://localhost:3000
+echo System started. Opening browser...
