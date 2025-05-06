@@ -11,6 +11,8 @@ echo No process running on port 9090
 
 :continue
 
+cd mllib
+
 REM Build the Java backend
 call gradlew clean build shadowJar -x test
 
