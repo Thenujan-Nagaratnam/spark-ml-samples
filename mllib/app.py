@@ -59,43 +59,6 @@ def train():
     return True
 
 
-# def load_model():
-#     if not (
-#         os.path.exists(MODEL_DIR_PATH)
-#         and os.path.isdir(MODEL_DIR_PATH)
-#         and len(os.listdir(MODEL_DIR_PATH)) > 0
-#     ):
-#         requests.get(TRAIN_URL)
-#         return False
-#     else:
-#         return True
-
-
-# @app.route("/predict", methods=["POST"])
-# def predict():
-#     if request.method == "POST":
-#         try:
-#             # Get lyrics from form
-#             lyrics = request.form.get("lyrics", "")
-
-#             if not lyrics:
-#                 return jsonify({"error": "No lyrics provided"}), 400
-
-#             # Make prediction
-#             result = predict_genre(lyrics)
-
-#             if "error" in result:
-#                 return jsonify({"error": result["error"]}), 500
-
-#             return jsonify(result)
-
-#         except Exception as e:
-#             logger.error(f"Error in prediction route: {str(e)}")
-#             return jsonify({"error": str(e)}), 500
-
-#     return jsonify({"error": "Method not allowed"}), 405
-
-
 if __name__ == "__main__":
 
     # Create templates directory if it doesn't exist
