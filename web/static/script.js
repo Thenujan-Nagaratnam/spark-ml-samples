@@ -17,10 +17,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = new FormData(lyricsForm);
         
         try {
+            console.log('Form data:', formData); // Debugging line
             // Send POST request to backend
-            const response = await fetch('lyrics/predict', {
+            const response = await fetch('http://172.18.113.33:9090/lyrics/predict', {
                 method: 'POST',
-                body: formData
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
             });
             
             if (!response.ok) {

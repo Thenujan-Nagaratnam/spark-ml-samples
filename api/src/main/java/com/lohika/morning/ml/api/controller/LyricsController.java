@@ -21,6 +21,11 @@ public class LyricsController {
     @Autowired
     private LyricsService lyricsService;
 
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String getLyricsPage() {
+        return "index";
+    }
+
     @RequestMapping(value = "/train", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> trainLyricsModel() {
         Map<String, Object> trainStatistics = lyricsService.classifyLyrics();
@@ -33,18 +38,6 @@ public class LyricsController {
         GenrePrediction genrePrediction = lyricsService.predictGenre(unknownLyrics);
 
         return new ResponseEntity<>(genrePrediction, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "text/html")
-    public ResponseEntity<String> getLyrics() {
-        try {
-            String htmlContent = new String(
-                Files.readAllBytes(Paths.get("src/main/resources/static/index.html"))
-            );
-            return new ResponseEntity<>(htmlContent, HttpStatus.OK);
-        } catch (IOException e) {
-            return new ResponseEntity<>("Error loading the page", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
 }
