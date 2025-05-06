@@ -9,6 +9,8 @@ else
   echo "No process running on port 9090"
 fi
 
+cd mllib
+
 # Start the Java backend
 ./gradlew clean build shadowJar -x test
 sleep 5
