@@ -17,3 +17,6 @@ target/
 # Grale
 build/
 .gradle
+
+
+venv

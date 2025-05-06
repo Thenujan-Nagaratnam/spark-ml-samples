@@ -18,15 +18,15 @@ Quick build without tests:
 ### Run
 
 ```
-java -jar api/build/libs/api-1.0-SNAPSHOT.jar --spring.config.location=file:/home/thenu/spark-ml-sample/application.properties
+java -jar api/build/libs/api-1.0-SNAPSHOT.jar --spring.config.location=file:application.properties
 ```
 
 
 ### Train and Infer the model
 
 ```
-curl -X GET http://172.18.113.33:9090/lyrics/train
+curl -X GET http://localhost:9090/lyrics/train
 
-curl -X POST http://172.18.113.33:9090/lyrics/predict  -H "Content-Type: application/json"  -d '{"unknownLyrics": "Your lyrics go here"}'
+curl -X POST http://localhost:9090/lyrics/predict  -H "Content-Type: application/json"  -d '{"unknownLyrics": "Your lyrics go here"}'
 
 ```

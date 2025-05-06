@@ -5,8 +5,8 @@ import webbrowser
 import logging
 
 app = Flask(__name__)
-PREDICT_URL = 'http://172.18.113.33:9090/lyrics/predict'
-TRAIN_URL = 'http://172.18.113.33:9090/lyrics/train'
+PREDICT_URL = "http://localhost:9090/lyrics/predict"
+TRAIN_URL = "http://localhost:9090/lyrics/train"
 MODEL_DIR_PATH = "../model"
 
 # Configure logging
@@ -24,14 +24,16 @@ def serve_static(path):
     return send_from_directory("static", path)
 
 
-@app.route('/predict', methods=['POST'])
+@app.route("/predict", methods=["POST"])
 def predict():
 
     lyrics = request.form.get("lyrics", "")
 
     print("lyrics", lyrics)
 
-    response = requests.post(PREDICT_URL, headers={'Content-Type': 'text/plain'}, data=lyrics)
+    response = requests.post(
+        PREDICT_URL, headers={"Content-Type": "text/plain"}, data=lyrics
+    )
     raw = response.json()
 
     predicted_genre = raw.get("genre")
@@ -42,13 +44,10 @@ def predict():
             genre = key.replace("Probability", "")
             probabilities[genre] = value
 
-    return jsonify({
-        "predicted_genre": predicted_genre,
-        "probabilities": probabilities
-    })
+    return jsonify({"predicted_genre": predicted_genre, "probabilities": probabilities})
 
 
-@app.route('/train', methods=['GET'])
+@app.route("/train", methods=["GET"])
 def train():
     if not (
         os.path.exists(MODEL_DIR_PATH)
