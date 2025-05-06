@@ -10,7 +10,7 @@ else
 fi
 
 # Start the Java backend
-# ./gradlew clean build shadowJar -x test
+./gradlew clean build shadowJar -x test
 sleep 5
 java -jar api/build/libs/api-1.0-SNAPSHOT.jar --spring.config.location=file:$(pwd)/application.properties &
 
