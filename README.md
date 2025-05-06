@@ -3,6 +3,16 @@
 ### Lyrics Classifier
 Recognize genre.
 
+### Pre Requisites
+
+```
+$env:JAVA_HOME="C:\Path\To\Java\jdk1.8.0_202"
+$env:Path="$env:JAVA_HOME\bin;$env:Path"
+
+$env:HADOOP_HOME = "C:\hadoop"
+$env:PATH += ";$env:HADOOP_HOME\bin"
+```
+
 ## Build, Configure and Run
 
 ### Build
