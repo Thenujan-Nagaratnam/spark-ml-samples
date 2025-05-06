@@ -6,17 +6,14 @@ echo "Starting Lyrics Classification System..."
 sleep 5
 java -jar api/build/libs/api-1.0-SNAPSHOT.jar --spring.config.location=file:$(pwd)/application.properties &
 
-# Start the frontend
-npm run dev &
-
 # Wait a moment for services to start
 sleep 10
 
-# Open the browser (works on most Linux and macOS)
+# Open the browser with the HTML file directly
 if command -v xdg-open &> /dev/null; then
-    xdg-open http://localhost:3000
+    xdg-open "$(pwd)/index.html"
 elif command -v open &> /dev/null; then
-    open http://localhost:3000
+    open "$(pwd)/index.html"
 fi
 
 echo "System started. Opening browser..."
