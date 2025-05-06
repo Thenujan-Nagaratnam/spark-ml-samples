@@ -26,7 +26,12 @@ def serve_static(path):
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    response = requests.post(PREDICT_URL, headers={'Content-Type': 'text/plain'}, data=request.data)
+
+    lyrics = request.form.get("lyrics", "")
+
+    print("lyrics", lyrics)
+
+    response = requests.post(PREDICT_URL, headers={'Content-Type': 'text/plain'}, data=lyrics)
     raw = response.json()
 
     predicted_genre = raw.get("genre")
@@ -98,8 +103,8 @@ if __name__ == "__main__":
     os.makedirs("templates", exist_ok=True)
 
     # Copy index.html to templates directory for Flask to find it
-    if not os.path.exists("templates/index.html"):
-        with open("index.html", "r") as f_src:
+    if not os.path.exists("web/templates/index.html"):
+        with open("web/index.html", "r") as f_src:
             with open("templates/index.html", "w") as f_dst:
                 f_dst.write(f_src.read())
 
