@@ -18,9 +18,12 @@ document.addEventListener('DOMContentLoaded', function() {
         
         try {
             // Send POST request to backend
-            const response = await fetch('/predict', {
+            const response = await fetch('/lyrics/predict', {
                 method: 'POST',
-                body: formData
+                headers: {
+                    "Content-Type": "text/plain"
+                },
+                body: formData.get('lyrics')
             });
             
             if (!response.ok) {
@@ -61,12 +64,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to update results UI
     function updateResults(data) {
+        // Convert the data format to match the expected structure
+        const probabilities = {
+            pop: data.popProbability,
+            country: data.countryProbability,
+            blues: data.bluesProbability,
+            rock: data.rockProbability,
+            jazz: data.jazzProbability,
+            reggae: data.reggaeProbability,
+            hipHop: data.hipHopProbability,
+            hyperpop: data.hyperpopProbability
+        };
+
         // Update predicted genre and confidence
-        predictedGenreElement.textContent = data.predicted_genre;
-        confidenceElement.textContent = (data.probabilities[data.predicted_genre] * 100).toFixed(2) + '%';
-        
+        predictedGenreElement.textContent = data.genre;
+        confidenceElement.textContent = (probabilities[data.genre] * 100).toFixed(2) + '%';
+
         // Create chart for visualization
-        createChart(data.probabilities);
+        createChart(probabilities);
     }
 
     // Function to create chart visualization

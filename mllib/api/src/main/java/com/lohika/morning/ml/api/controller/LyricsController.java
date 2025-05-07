@@ -20,6 +20,11 @@ public class LyricsController {
 
     @Autowired
     private LyricsService lyricsService;
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String index() {
+        return "index.html";
+    }
     
     @RequestMapping(value = "/train", method = RequestMethod.GET)
     ResponseEntity<Map<String, Object>> trainLyricsModel() {
