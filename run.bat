@@ -13,17 +13,17 @@ echo No process running on port 9090
 
 cd mllib
 
-REM Build the Java backend
-call gradlew clean build shadowJar -x test
+@REM REM Build the Java backend
+@REM call gradlew clean build shadowJar -x test
 
-REM Wait a bit for the build to complete
-timeout /t 5 /nobreak >nul
+@REM REM Wait a bit for the build to complete
+@REM timeout /t 5 /nobreak >nul
 
 REM Start the Java server
 start /B java -jar api\build\libs\api-1.0-SNAPSHOT.jar --spring.config.location=file:%cd%\application.properties
 
-REM Wait for services to start
-timeout /t 5 /nobreak >nul
+@REM REM Wait for services to start
+@REM timeout /t 5 /nobreak >nul
 
 REM Exit if any command fails (simulate 'set -e')
 setlocal EnableExtensions EnableDelayedExpansion
