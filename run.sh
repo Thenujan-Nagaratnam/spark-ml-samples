@@ -14,10 +14,9 @@ cd mllib
 # Start the Java backend
 ./gradlew clean build shadowJar -x test
 
-
 java -jar api/build/libs/api-1.0-SNAPSHOT.jar --spring.config.location=file:$(pwd)/application.properties &
 
-sleep 5
+sleep 10
 
 # Open the default web browser to the specified URL
 xdg-open http://localhost:9090/ 2>/dev/null || \

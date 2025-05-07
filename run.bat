@@ -20,7 +20,7 @@ REM Start the Java server
 start /B java -jar api\build\libs\api-1.0-SNAPSHOT.jar --spring.config.location=file:%cd%\application.properties
 
 REM Wait a bit for the build to complete
-timeout /t 5 /nobreak >nul
+timeout /t 10 >nul
 
 REM Open the default web browser to the server URL
 start http://localhost:9090/
