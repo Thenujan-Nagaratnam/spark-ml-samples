@@ -13,28 +13,15 @@ cd mllib
 
 # Start the Java backend
 ./gradlew clean build shadowJar -x test
-sleep 5
+
+
 java -jar api/build/libs/api-1.0-SNAPSHOT.jar --spring.config.location=file:$(pwd)/application.properties &
 
-# Wait a moment for services to start
 sleep 5
 
-# Exit if any command fails
-set -e
-
-# Create virtual environment
-python3 -m venv venv
-
-# Activate virtual environment
-. venv/bin/activate
-
-# Upgrade pip
-pip install --upgrade pip
-
-# Install dependencies
-pip install flask requests
-
-# Run the application
-python3 app.py
+# Open the default web browser to the specified URL
+xdg-open http://localhost:9090/ 2>/dev/null || \
+open http://localhost:9090/ 2>/dev/null || \
+start http://localhost:9090/
 
 echo "System started. Opening browser..."

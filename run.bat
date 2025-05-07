@@ -13,40 +13,16 @@ echo No process running on port 9090
 
 cd mllib
 
-@REM REM Build the Java backend
-@REM call gradlew clean build shadowJar -x test
-
-@REM REM Wait a bit for the build to complete
-@REM timeout /t 5 /nobreak >nul
+REM Build the Java backend
+call gradlew clean build shadowJar -x test
 
 REM Start the Java server
 start /B java -jar api\build\libs\api-1.0-SNAPSHOT.jar --spring.config.location=file:%cd%\application.properties
 
-@REM REM Wait for services to start
-@REM timeout /t 5 /nobreak >nul
+REM Wait a bit for the build to complete
+timeout /t 5 /nobreak >nul
 
-REM Exit if any command fails (simulate 'set -e')
-setlocal EnableExtensions EnableDelayedExpansion
-set "error=0"
-
-REM Create virtual environment
-python -m venv venv || set error=1
-
-if !error! NEQ 0 (
-    echo Failed to create virtual environment. Exiting...
-    exit /b 1
-)
-
-REM Activate virtual environment
-call venv\Scripts\activate.bat
-
-REM Upgrade pip
-python -m pip install --upgrade pip
-
-REM Install dependencies
-pip install flask requests
-
-REM Run the application
-python app.py
+REM Open the default web browser to the server URL
+start http://localhost:9090/
 
 echo System started. Opening browser...
